@@ -51,12 +51,13 @@ namespace ECHONET_Lite
                 if (EObjects.Count > 0)
                 {
                     textBox1.AppendText("応答 IPアドレス: " + EObjects[0].IPAddress + "\r\n");
+                    textBox2.Text = EObjects[0].GroupCd.ToString("X2") + EObjects[0].ClassCd.ToString("X2");
                 }
 
                 string name = "ノード : ";
                 string str = "";
-                int min = int.MaxValue;
-                int max = int.MinValue;
+                int min = 0;
+                int max = 0;
 
                 for (int i = 0; i < EObjects.Count; i++)
                 {
@@ -64,17 +65,10 @@ namespace ECHONET_Lite
                     str += EObjects[i].InstanceCd.ToString("X2") + "\r\n";
                     textBox1.AppendText(name + str);
 
-                    if (max < EObjects[i].InstanceCd)
-                    {
-                        max = EObjects[i].InstanceCd;
-                    }
-                    if (min > EObjects[i].InstanceCd)
-                    {
-                        min = EObjects[i].InstanceCd;
-                    }
+                    max = max < EObjects[i].InstanceCd ? EObjects[i].InstanceCd : max;
+                    min = min > EObjects[i].InstanceCd ? EObjects[i].InstanceCd : min;
                 }
 
-                textBox2.Text = EObjects[0].GroupCd.ToString("X2") + EObjects[0].ClassCd.ToString("X2");
                 textBox2.Enabled = true;
                 nudNumber.Enabled = true;
                 nudNumber.Maximum = max;
@@ -82,8 +76,8 @@ namespace ECHONET_Lite
                 btnON.Enabled = true;
                 btnOFF.Enabled = true;
             }
-            button1.Enabled = true;
 
+            button1.Enabled = true;
         }
 
         private void OnOff(bool sw)
