@@ -75,6 +75,7 @@ namespace ECHONET_Lite
                 nudNumber.Minimum = min;
                 btnON.Enabled = true;
                 btnOFF.Enabled = true;
+                nudNumber.Focus();
             }
 
             button1.Enabled = true;
@@ -107,6 +108,7 @@ namespace ECHONET_Lite
             btnON.Enabled = false;
             OnOff(true);
             btnON.Enabled = true;
+            btnOFF.Focus();
         }
 
         private void btnOFF_Click(object sender, EventArgs e)
@@ -114,6 +116,7 @@ namespace ECHONET_Lite
             btnOFF.Enabled = false;
             OnOff(false);
             btnOFF.Enabled = true;
+            btnON.Focus();
         }
     }
 }
