@@ -1,2 +1,8 @@
-# echonetlitecs
-ECHONET Lite C# TEST code
+# ECHONET Lite C# Code Sample
+
+
+エコーネットライトのC#のサンプルコードです。
+
+License
+------
+[MIT License](MITL).
