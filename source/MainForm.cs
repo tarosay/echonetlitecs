@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,6 +14,7 @@ namespace ECHONET_Lite
     public partial class MainForm : Form
     {
         private static List<EchonetLite.EObject> EObjects = null;
+        private static string LocalIP = "";
 
         public MainForm()
         {
@@ -36,7 +38,15 @@ namespace ECHONET_Lite
             btnOFF.Enabled = false;
             textBox2.Text = "";
 
+            if (LocalIP == "")
+            {
+                textBox1.AppendText("DHCPで取得した自分のIPアドレスを読み込み中\r\n");
+                LocalIP = GetLocalIPV4Address("DHCP");
+                textBox1.AppendText("ローカルIPアドレス : " + LocalIP + "\r\n");
+            }
+
             EchonetLite echonetLite = new EchonetLite();
+            echonetLite.LocalAddress = LocalIP;
 
             string errmsg = "";
 
@@ -117,6 +127,39 @@ namespace ECHONET_Lite
             OnOff(false);
             btnOFF.Enabled = true;
             btnON.Focus();
+        }
+
+        /// <summary>
+        /// DHCPからもらったIPV4のIPアドレスを取得します
+        /// </summary>
+        /// <returns></returns>
+        private string GetLocalIPV4Address(string type)
+        {
+            IPHostEntry ipentry = Dns.GetHostEntry(Dns.GetHostName());
+
+            foreach (IPAddress ip in ipentry.AddressList)
+            {
+                //IPV4のアドレスか？
+                if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                {
+                    if (type == "DHCP")
+                    {
+                        //IPHostEntryオブジェクトを取得
+                        IPHostEntry ipHost = Dns.GetHostEntry(ip.ToString());
+
+                        if (ipHost.HostName.IndexOf(".") > 0)
+                        {
+                            //.○○.○○.○○とあったらDHCPからもらったアドレスだと思われる
+                            return ip.ToString();
+                        }
+                    }
+                    else
+                    {
+                        return ip.ToString();
+                    }
+                }
+            }
+            return string.Empty;
         }
     }
 }

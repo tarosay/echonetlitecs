@@ -32,6 +32,9 @@ namespace ECHONET_Lite
             INF = 0x73,         //自身の情報を同一ネットワーク内の全てのコントローラーに通知するときにつける。自発的に送信したとき
         }
 
+        /// <summary>
+        /// ECHONETオブジェクトのパラメータ
+        /// </summary>
         public class EObject
         {
             public int Number = 0;
@@ -40,6 +43,11 @@ namespace ECHONET_Lite
             public byte ClassCd = 0;
             public byte InstanceCd = 0;
         }
+
+        /// <summary>
+        /// ローカルマシンのIPアドレス
+        /// </summary>
+        public string LocalAddress { get; set; } = "127.0.0.1";
 
         public EchonetLite()
         {
@@ -95,7 +103,7 @@ namespace ECHONET_Lite
                 try
                 {
                     udpClient.Client.Bind(new IPEndPoint(IPAddress.Any, Port));
-                    udpClient.JoinMulticastGroup(address);
+                    udpClient.JoinMulticastGroup(address, IPAddress.Parse(LocalAddress));
                     udpClient.MulticastLoopback = true;
 
                     byte[] frame = CreateSearchFrame();
