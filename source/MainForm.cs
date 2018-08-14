@@ -55,18 +55,21 @@ namespace ECHONET_Lite
 
             if (EObjects != null)
             {
+                int min = 0;
+                int max = 0;
+
                 textBox1.AppendText("検索結果\r\n");
 
                 if (EObjects.Count > 0)
                 {
                     textBox1.AppendText("応答 IPアドレス: " + EObjects[0].IPAddress + "\r\n");
                     textBox2.Text = EObjects[0].GroupCd.ToString("X2") + EObjects[0].ClassCd.ToString("X2");
+                    max = EObjects[0].InstanceCd;
+                    min = EObjects[0].InstanceCd;
                 }
 
                 string name = "ノード : ";
                 string str = "";
-                int min = 0;
-                int max = 0;
 
                 for (int i = 0; i < EObjects.Count; i++)
                 {
