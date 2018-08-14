@@ -45,8 +45,7 @@ namespace ECHONET_Lite
                 textBox1.AppendText("ローカルIPアドレス : " + LocalIP + "\r\n");
             }
 
-            EchonetLite echonetLite = new EchonetLite();
-            echonetLite.LocalAddress = LocalIP;
+            EchonetLite echonetLite = new EchonetLite(LocalIP);
 
             string errmsg = "";
 

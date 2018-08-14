@@ -53,6 +53,14 @@ namespace ECHONET_Lite
         {
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="localip">ローカルIPアドレス</param>
+        public EchonetLite(string localip)
+        {
+            this.LocalAddress = localip;
+        }
 
         /// <summary>
         /// ノード検索用フレームを生成します
